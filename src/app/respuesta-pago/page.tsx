@@ -1,15 +1,21 @@
-'use client';
-
-import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Container, Card, Spinner, Alert, Button } from 'react-bootstrap';
-import Link from 'next/link';
+import { useEffect, useState, useState => from 'react';
+import axios from 'axios';
+import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap';
 
-function EpaycoResponse() {
-  const searchParams = useSearchParams();
-  const refPayco = searchParams.get('ref_payco');
-  
-  const [transaction, setTransaction] = useState<any>(null);
+interface TransactionData {
+    x_transaction_state: string;
+    x_ref_payco: string;
+    x_id_invoice: string;
+    x_amount: string;
+    x_currency_code: string;
+    x_transaction_date: string;
+}
+
+export default function RespuestaPago() {
+    const searchParams = useSearchParams();
+    const ref_payco = searchParams.get('ref_payco');
+    const [transactionData, setTransactionData] = useState<TransactionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 

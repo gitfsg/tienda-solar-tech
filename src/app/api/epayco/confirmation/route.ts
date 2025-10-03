@@ -1,14 +1,20 @@
 
-import { NextRequest, NextResponse } from 'next/server';
-import * as crypto from 'crypto';
+import { NextResponse } from 'next/server';
+import crypto from 'crypto';
 
-export async function POST(req: NextRequest) {
-  try {
-    const formData = await req.formData();
-    const data: { [key: string]: any } = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+interface EpaycoConfirmationBody {
+    x_cust_id_cliente: string;
+    x_ref_payco: string;
+    x_id_invoice: string;
+    x_amount: string;
+    x_currency_code: string;
+    x_signature: string;
+    x_cod_transaction_state: string;
+    x_transaction_state: string;
+}
+
+export async function POST(req: Request) {
+    const body: EpaycoConfirmationBody = await req.json();
 
     // 1. Extraer datos de la respuesta de ePayco
     const signature = data.x_signature;

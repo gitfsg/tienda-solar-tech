@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 
+interface EpaycoConfirmationBody {
+  x_cust_id_cliente: string;
+  x_ref_payco: string;
+  x_id_invoice: string;
+  x_amount: string;
+  x_currency_code: string;
+  x_signature: string;
+  x_cod_transaction_state: string;
+  x_transaction_state: string;
+}
+
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
+  const body: EpaycoConfirmationBody = await request.json();
 
     // 1. Get keys from environment variables
     const pCustId = process.env.EPAYCO_CUST_ID; // Corrected variable
