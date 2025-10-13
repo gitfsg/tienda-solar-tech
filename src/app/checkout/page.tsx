@@ -84,6 +84,9 @@ export default function CheckoutPage() {
 
       };
 
+      console.log("Contenido del carrito:", cart);
+      console.log("Datos enviados a ePayco:", checkoutData);
+
       epaycoHandler.open(checkoutData);
 
     } catch (error) {
