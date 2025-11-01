@@ -16,8 +16,8 @@ export default function HomePage() {
     <div className="mb-5">
       <div style={heroStyle}>
         <Container>
-          <h1 className="display-3 fw-bold">Energía Limpia a tu Alcance</h1>
-          <p className="lead fs-4">
+          <h1 className="display-3 fw-bold" style={{ color: '#008000' }}>Energía Limpia a tu Alcance</h1>
+          <p className="lead fs-4" style={{ color: '#008000' }}>
             Equipos de energía solar de alta calidad y la mejor tecnología para tu hogar y negocio.
           </p>
           <Link href="/productos" passHref legacyBehavior>

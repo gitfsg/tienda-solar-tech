@@ -10,10 +10,12 @@ interface EpaycoConfirmationBody {
   x_signature: string;
   x_cod_transaction_state: string;
   x_transaction_state: string;
+  x_transaction_id: string;
 }
 
 export async function POST(request: Request) {
-  const body: EpaycoConfirmationBody = await request.json();
+  try {
+    const body: EpaycoConfirmationBody = await request.json();
 
     // 1. Get keys from environment variables
     const pCustId = process.env.EPAYCO_CUST_ID; // Corrected variable
@@ -44,17 +46,17 @@ export async function POST(request: Request) {
     console.log(`ePayco Webhook: Invoice ${invoiceId} - State: ${transactionState}`);
 
     switch (transactionState) {
-      case 1: // Aceptada
+      case '1': // Aceptada
         console.log(`Payment accepted for invoice ${invoiceId}.`);
         // TODO: Update your database here. Mark the order as paid.
         // Example: await db.orders.update({ where: { id: invoiceId }, data: { status: 'PAID' } });
         break;
-      case 2: // Rechazada
+      case '2': // Rechazada
         console.log(`Payment rejected for invoice ${invoiceId}.`);
         // TODO: Update your database. Mark the order as rejected or failed.
         // Example: await db.orders.update({ where: { id: invoiceId }, data: { status: 'REJECTED' } });
         break;
-      case 3: // Pendiente
+      case '3': // Pendiente
         console.log(`Payment pending for invoice ${invoiceId}.`);
         // TODO: Update your database. Mark the order as pending.
         // Example: await db.orders.update({ where: { id: invoiceId }, data: { status: 'PENDING' } });
