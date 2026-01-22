@@ -14,17 +14,18 @@ interface EpaycoConfirmationBody {
 }
 
 export async function POST(req: Request) {
+  try {
     const body: EpaycoConfirmationBody = await req.json();
 
     // 1. Extraer datos de la respuesta de ePayco
-    const signature = data.x_signature;
+    const signature = body.x_signature;
     const custId = process.env.EPAYCO_CUST_ID;
     const pKey = process.env.EPAYCO_P_KEY;
-    const refPayco = data.x_ref_payco;
-    const transactionId = data.x_transaction_id;
-    const amount = data.x_amount;
-    const currencyCode = data.x_currency_code;
-    const transactionState = data.x_transaction_state;
+    const refPayco = body.x_ref_payco;
+    const transactionId = body.x_transaction_id;
+    const amount = body.x_amount;
+    const currencyCode = body.x_currency_code;
+    const transactionState = body.x_transaction_state;
 
     // 2. Validar la firma para asegurar que la petición viene de ePayco
     if (!pKey || !custId) {
@@ -51,15 +52,15 @@ export async function POST(req: Request) {
 
     switch (transactionState) {
       case 'Aceptada':
-        console.log(`Pedido ${data.x_invoice} ACEPTADO. Actualizando base de datos.`);
+        console.log(`Pedido ${body.x_invoice} ACEPTADO. Actualizando base de datos.`);
         // Ejemplo: await updateOrderStatus(data.x_invoice, 'pagado');
         break;
       case 'Rechazada':
-        console.log(`Pedido ${data.x_invoice} RECHAZADO. Actualizando base de datos.`);
+        console.log(`Pedido ${body.x_invoice} RECHAZADO. Actualizando base de datos.`);
         // Ejemplo: await updateOrderStatus(data.x_invoice, 'fallido');
         break;
       case 'Pendiente':
-        console.log(`Pedido ${data.x_invoice} PENDIENTE. Actualizando base de datos.`);
+        console.log(`Pedido ${body.x_invoice} PENDIENTE. Actualizando base de datos.`);
         // Ejemplo: await updateOrderStatus(data.x_invoice, 'pendiente');
         break;
       default:

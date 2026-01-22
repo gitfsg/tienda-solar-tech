@@ -20,12 +20,13 @@ export default function HomePage() {
           <p className="lead fs-4" style={{ color: '#008000' }}>
             Equipos de energía solar de alta calidad y la mejor tecnología para tu hogar y negocio.
           </p>
-          <Link href="/productos" passHref legacyBehavior>
+          <Link href="/productos">
+            {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
+            }
             <Button variant="primary" size="lg">Ver Productos</Button>
           </Link>
         </Container>
       </div>
-
       <Container className="mt-5">
         <h2 className="text-center mb-4">¿Por qué elegirnos?</h2>
         <Row className="text-center">

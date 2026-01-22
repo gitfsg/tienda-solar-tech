@@ -19,7 +19,9 @@ export default function CarritoPage() {
       {cart.length === 0 ? (
         <div className="text-center">
           <p className="fs-4">Tu carrito está vacío.</p>
-          <Link href="/productos" passHref legacyBehavior>
+          <Link href="/productos">
+            {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
+            }
             <Button variant="primary">Ver productos</Button>
           </Link>
         </div>
@@ -66,7 +68,9 @@ export default function CarritoPage() {
             </Col>
             <Col md={6} className="text-end">
               <h3 className="fw-bold">Total: {formatPrice(total)}</h3>
-              <Link href="/checkout" passHref legacyBehavior>
+              <Link href="/checkout">
+                {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
+                }
                 <Button variant="success" size="lg" className="mt-2">Proceder al Pago</Button>
               </Link>
             </Col>

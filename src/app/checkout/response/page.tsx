@@ -118,7 +118,7 @@ function ResponseContent() {
               {renderStatusMessage()}
               {!loading && (
                 <div className="mt-4 text-center">
-                  <Link href="/" passHref>
+                  <Link href="/">
                     <Button variant="primary">Volver a la tienda</Button>
                   </Link>
                 </div>
