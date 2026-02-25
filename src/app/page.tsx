@@ -1,14 +1,14 @@
 
-import { Container, Button, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Link from 'next/link';
 
 const heroStyle = {
-  background: `url('https://images.unsplash.com/photo-1508514177221-188b2cf16a7a?q=80&w=2070&auto=format&fit=crop') no-repeat center center`,
+  background: `linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url('https://images.unsplash.com/photo-1508514177221-188b2cf16a7a?q=80&w=2070&auto=format&fit=crop') no-repeat center center`,
   backgroundSize: 'cover',
   color: 'white',
   padding: '100px 0',
   textAlign: 'center' as const, // Use as const for type safety
-  textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
+  textShadow: '2px 2px 8px rgba(0,0,0,0.4)',
 };
 
 export default function HomePage() {
@@ -16,14 +16,24 @@ export default function HomePage() {
     <div className="mb-5">
       <div style={heroStyle}>
         <Container>
-          <h1 className="display-3 fw-bold" style={{ color: '#008000' }}>Energía Limpia a tu Alcance</h1>
-          <p className="lead fs-4" style={{ color: '#008000' }}>
+          <h1 className="display-3 fw-bold" style={{ color: '#2D5A27', textShadow: '1px 1px 2px rgba(255,255,255,0.8)' }}>Energía Limpia a tu Alcance</h1>
+          <p className="lead fs-4" style={{ color: '#2D5A27', fontWeight: '500' }}>
             Equipos de energía solar de alta calidad y la mejor tecnología para tu hogar y negocio.
           </p>
-          <Link href="/productos">
-            {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
-            }
-            <Button variant="primary" size="lg">Ver Productos</Button>
+          <Link href="/productos" style={{ textDecoration: 'none' }}>
+            <div className="banner-container">
+              <div className="banner-content">
+                <img src="/inversor MUST 3000w 24vdc 120vac LVHM (1).jpg" alt="Inversor MUST" className="banner-img" />
+                <img src="/Paneles solares en techo 1.jpeg" alt="Paneles solares en techo" className="banner-img" />
+                <img src="/Productos tecnologia 2.jpg" alt="Productos Tecnología" className="banner-img" />
+                <img src="/batería LITIO 24vdc.jpg" alt="Batería de Litio" className="banner-img" />
+                {/* Duplicated images for infinite loop */}
+                <img src="/inversor MUST 3000w 24vdc 120vac LVHM (1).jpg" alt="Inversor MUST" className="banner-img" />
+                <img src="/Paneles solares en techo 1.jpeg" alt="Paneles solares en techo" className="banner-img" />
+                <img src="/Productos tecnologia 2.jpg" alt="Productos Tecnología" className="banner-img" />
+                <img src="/batería LITIO 24vdc.jpg" alt="Batería de Litio" className="banner-img" />
+              </div>
+            </div>
           </Link>
         </Container>
       </div>

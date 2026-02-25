@@ -6,7 +6,7 @@ const epayco = require('epayco-sdk-node')({
   apiKey: process.env.EPAYCO_PUBLIC_KEY,
   privateKey: process.env.EPAYCO_PRIVATE_KEY,
   lang: 'ES',
-  test: true, // Poner en false para producción
+  test: process.env.EPAYCO_TEST_MODE === 'true',
 });
 
 export async function POST(req: NextRequest) {

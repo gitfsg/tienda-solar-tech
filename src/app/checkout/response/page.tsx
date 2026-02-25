@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
-import { Container, Alert, Spinner, Card } from 'react-bootstrap';
+import { Container, Alert, Spinner, Card, Row, Col, Button } from 'react-bootstrap';
 import Link from 'next/link';
 
 function ResponseContent() {
@@ -15,6 +15,7 @@ function ResponseContent() {
   const [transactionData, setTransactionData] = useState<any>(null);
 
   useEffect(() => {
+    // Página de respuesta (según script original de ePayco)
     const ref_payco = searchParams.get('ref_payco');
 
     if (!ref_payco) {
@@ -23,8 +24,21 @@ function ResponseContent() {
       return;
     }
 
+    const transaction = {
+      refPayco: searchParams.get('ref_payco'),
+      response: searchParams.get('x_response'),
+      transactionId: searchParams.get('x_transaction_id'),
+      amount: searchParams.get('x_amount'),
+      currency: searchParams.get('x_currency_code'),
+      franchise: searchParams.get('x_franchise'),
+      approvalCode: searchParams.get('x_approval_code'),
+      responseReason: searchParams.get('x_response_reason_text'),
+      invoice: searchParams.get('x_invoice')
+    };
+
     const verifyPayment = async () => {
       try {
+        // Aunque tengamos los datos de la URL, es mejor verificar con el backend
         const response = await fetch('/api/epayco/verify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -34,19 +48,25 @@ function ResponseContent() {
         const result = await response.json();
 
         if (!response.ok || !result.success) {
-          throw new Error(result.error || 'Error al verificar el pago.');
-        }
-
-        setStatus(result.status);
-        setTransactionData(result);
-
-        // Si la transacción es aceptada, limpiar el carrito
-        if (result.code === 1) {
-          clearCart();
+          // Si falla la verificación por API, usamos los datos de la URL como respaldo
+          // (aunque ePayco recomienda validar siempre en el backend)
+          setStatus(transaction.response || 'Error');
+          setTransactionData(transaction);
+        } else {
+          setStatus(result.status);
+          setTransactionData(result);
+          
+          // Si la transacción es aceptada, limpiar el carrito
+          if (result.code === 1 || result.status === 'Aceptada') {
+            clearCart();
+          }
         }
 
       } catch (err: any) {
-        setError(err.message);
+        console.error('Error verifying payment:', err);
+        // Respaldo con datos de la URL en caso de error de red
+        setStatus(transaction.response || 'Error');
+        setTransactionData(transaction);
       } finally {
         setLoading(false);
       }

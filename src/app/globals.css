@@ -24,3 +24,55 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Banner desplazándose de izquierda a derecha */
+@keyframes scrollLeftToRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.banner-container {
+  overflow: hidden;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: rgba(255, 255, 255, 0.05); /* Fondo más sutil */
+  backdrop-filter: blur(10px);
+  padding: 40px 0; /* Un poco más de aire */
+  margin-top: 50px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.banner-content {
+  display: flex;
+  width: max-content;
+  animation: scrollLeftToRight 60s linear infinite; /* Velocidad más lenta y elegante */
+  gap: 40px; /* Mayor espacio entre imágenes */
+  padding-right: 40px;
+}
+
+.banner-img {
+  height: 320px; /* Un poco más grandes */
+  width: 450px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 16px; /* Bordes más redondeados */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* Sombra más suave y profunda */
+  transition: transform 0.3s ease; /* Efecto interactivo al pasar el mouse */
+  display: block;
+}
+
+.banner-img:hover {
+  transform: scale(1.02); /* Pequeño zoom al pasar el mouse */
+}

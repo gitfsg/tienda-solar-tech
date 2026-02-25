@@ -1,19 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Script from 'next/script';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
 import { useCart } from '@/context/CartContext';
 import { Container, Row, Col, Form, Button, Card, ListGroup, Alert } from 'react-bootstrap';
 
-// This tells TypeScript that the Epayco object will exist on the window
-declare global {
-  interface Window {
-    Epayco: any;
-  }
-}
-
 export default function CheckoutPage() {
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart(); // Get clearCart
+  const router = useRouter(); // Initialize useRouter
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,8 +21,6 @@ export default function CheckoutPage() {
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-
-
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(price);
   };
@@ -37,15 +29,10 @@ export default function CheckoutPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (cart.length === 0) {
       setError('Tu carrito está vacío.');
-      return;
-    }
-
-    if (!window.Epayco) {
-      setError('El servicio de pago no está disponible. Por favor, recarga la página e intenta de nuevo.');
       return;
     }
 
@@ -53,45 +40,30 @@ export default function CheckoutPage() {
     setError('');
 
     try {
-      const epaycoHandler = window.Epayco.checkout.configure({
-        key: process.env.NEXT_PUBLIC_EPAYCO_PUBLIC_KEY,
-        test: true, // Set to true for testing, false for production
+      const response = await fetch('/api/epayco', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cart: cart,
+          total: total,
+          customerInfo: formData, // Pass customer info
+        }),
       });
 
-      const invoice = `INV-${Date.now()}`;
-      const description = cart.map(item => `${item.name} (x${item.quantity})`).join(', ');
+      const data = await response.json();
 
-      const checkoutData = {
-        name: "Pago de productos en Tienda Solar Tech",
-        description: description,
-        invoice: invoice,
-        currency: "cop",
-        amount: total.toString(),
-        tax_base: "0",
-        tax: "0",
-        country: "co",
-        lang: "es",
-        
-        name_billing: formData.name,
-        email_billing: formData.email,
-        address_billing: formData.shippingAddress,
-        mobilephone_billing: formData.phone,
-        city_billing: formData.city,
-        
-        response: `${window.location.origin}/respuesta-pago`,
-        confirmation: `${process.env.NEXT_PUBLIC_BASE_URL}/api/confirmacion-pago`,
+      if (response.ok && data.url) {
+        clearCart(); // Clear cart after successful checkout initiation
+        router.push(data.url); // Redirect to ePayco checkout URL
+      } else {
+        setError(data.error || 'Ocurrió un error al iniciar el pago con ePayco.');
+      }
 
-
-      };
-
-      console.log("Contenido del carrito:", cart);
-      console.log("Datos enviados a ePayco:", checkoutData);
-
-      epaycoHandler.open(checkoutData);
-
-    } catch (error) {
-      console.error('Error during ePayco checkout:', error);
-      setError('Ocurrió un error al procesar el pago. Por favor, inténtalo de nuevo.');
+    } catch (err) {
+      console.error('Error during ePayco checkout initiation:', err);
+      setError('Ocurrió un error de red al procesar el pago. Por favor, inténtalo de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -99,10 +71,6 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <Script
-        src="https://checkout.epayco.co/checkout.js"
-        strategy="afterInteractive"
-      />
       <Container className="my-5">
         <h1 className="mb-4">Finalizar Compra</h1>
         <Row>
