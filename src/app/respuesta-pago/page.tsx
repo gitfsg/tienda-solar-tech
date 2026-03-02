@@ -1,7 +1,10 @@
+"use client";
+
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card, ListGroup, Alert, Spinner, Button } from 'react-bootstrap';
+import Link from 'next/link';
 
 interface TransactionData {
     x_transaction_state: string;
@@ -44,7 +47,7 @@ export default function EpaycoResponse() {
       setError('No se encontró referencia de pago.');
       setLoading(false);
     }
-  }, [refPayco]);
+  }, [ref_payco]);
 
   const getStatusMessage = () => {
     if (!transactionData) return null;
