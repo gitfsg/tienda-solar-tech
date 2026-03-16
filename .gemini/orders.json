@@ -1,0 +1,56 @@
+[
+  {
+    "id": "ORD-1772023475402-435",
+    "customerId": "luisv1970@gmail.com",
+    "items": [
+      {
+        "id": 21,
+        "name": "Mouse Inalámbrico",
+        "price": 49900,
+        "description": "Mouse inalámbrico ergonómico. Desde $49,900.",
+        "category": "Tecnología",
+        "image": "/mouse inalámbrico 1.jpg",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 49900,
+    "currency": "cop",
+    "orderDate": "2026-02-25T12:44:35.402Z",
+    "status": "pending",
+    "customerInfo": {
+      "name": "luis vargas",
+      "email": "luisv1970@gmail.com",
+      "shippingAddress": "calle 4 20 50 ",
+      "department": "cordoba",
+      "city": "monteria",
+      "phone": "3102561030"
+    }
+  },
+  {
+    "id": "ORD-1772023498635-369",
+    "customerId": "luisv1970@gmail.com",
+    "items": [
+      {
+        "id": 21,
+        "name": "Mouse Inalámbrico",
+        "price": 49900,
+        "description": "Mouse inalámbrico ergonómico. Desde $49,900.",
+        "category": "Tecnología",
+        "image": "/mouse inalámbrico 1.jpg",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 49900,
+    "currency": "cop",
+    "orderDate": "2026-02-25T12:44:58.635Z",
+    "status": "pending",
+    "customerInfo": {
+      "name": "luis vargas",
+      "email": "luisv1970@gmail.com",
+      "shippingAddress": "calle 4 20 50 ",
+      "department": "cordoba",
+      "city": "monteria",
+      "phone": "3102561030"
+    }
+  }
+]

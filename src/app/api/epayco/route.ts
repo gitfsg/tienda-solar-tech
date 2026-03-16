@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { cart, total, customerInfo } = body; // Also expect customerInfo from the frontend
 
-    const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3001';
 
     // Generate a unique order ID
     const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
