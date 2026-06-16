@@ -87,7 +87,7 @@ export default function EpaycoResponse() {
               </ListGroup>
             </div>
           )}
-           <Link href="/" passHref>
+           <Link href="/">
             <Button variant="primary">Volver a la tienda</Button>
           </Link>
         </Card.Body>

@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --solar-green-light: #90ee90; /* LightGreen hex code */
+  --solar-green-dark: #1b4332;
 }
 
 @theme inline {
