@@ -52,5 +52,86 @@
       "city": "monteria",
       "phone": "3102561030"
     }
+  },
+  {
+    "id": "ORD-1773682532714-966",
+    "customerId": "vargasl2025@gmail.com",
+    "items": [
+      {
+        "id": 21,
+        "name": "Mouse Inalámbrico",
+        "price": 49900,
+        "description": "Mouse inalámbrico ergonómico. Desde $49,900.",
+        "category": "Tecnología",
+        "image": "/mouse inalámbrico 1.jpg",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 49900,
+    "currency": "cop",
+    "orderDate": "2026-03-16T17:35:32.714Z",
+    "status": "pending",
+    "customerInfo": {
+      "name": "luis vargas",
+      "email": "vargasl2025@gmail.com",
+      "shippingAddress": "kra 1 no 15 73",
+      "department": "santander",
+      "city": "san gil",
+      "phone": "3046073273"
+    }
+  },
+  {
+    "id": "ORD-1773689874843-573",
+    "customerId": "vargasl26@gmail.com",
+    "items": [
+      {
+        "id": 18,
+        "name": "Smartwatch Fitness",
+        "price": 150000,
+        "description": "Reloj inteligente para fitness con medición de pulso, oxigenación y presión arterial. Desde $150,000.",
+        "category": "Tecnología",
+        "image": "/Smartwatch T55.jpg",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 150000,
+    "currency": "cop",
+    "orderDate": "2026-03-16T19:37:54.843Z",
+    "status": "pending",
+    "customerInfo": {
+      "name": "luis vargas",
+      "email": "vargasl26@gmail.com",
+      "shippingAddress": "kar 13 no 10 80",
+      "department": "Valle del Cauca",
+      "city": "Cali",
+      "phone": "3046073273"
+    }
+  },
+  {
+    "id": "ORD-1773697044387-757",
+    "customerId": "vargasl26@gmail.com",
+    "items": [
+      {
+        "id": 18,
+        "name": "Smartwatch Fitness",
+        "price": 150000,
+        "description": "Reloj inteligente para fitness con medición de pulso, oxigenación y presión arterial. Desde $150,000.",
+        "category": "Tecnología",
+        "image": "/Smartwatch T55.jpg",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 150000,
+    "currency": "cop",
+    "orderDate": "2026-03-16T21:37:24.387Z",
+    "status": "pending",
+    "customerInfo": {
+      "name": "luis vargas",
+      "email": "vargasl26@gmail.com",
+      "shippingAddress": "kra 73 10 80",
+      "department": "Cauca",
+      "city": "Popayan",
+      "phone": "3046073273"
+    }
   }
 ]

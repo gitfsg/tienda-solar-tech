@@ -25,7 +25,7 @@ export default function CheckoutPage() {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(price);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -40,7 +40,7 @@ export default function CheckoutPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/epayco', {
+      const response = await fetch('/api/send-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,16 +54,20 @@ export default function CheckoutPage() {
 
       const data = await response.json();
 
-      if (response.ok && data.url) {
-        clearCart(); // Clear cart after successful checkout initiation
-        router.push(data.url); // Redirect to ePayco checkout URL
+      if (response.ok) {
+        clearCart(); // Clear cart after successful order submission
+        alert('¡Pedido enviado con éxito! Revisa tu correo electrónico para las instrucciones de pago.');
+        router.push('/'); // Redirect to home or a thank you page
       } else {
-        setError(data.error || 'Ocurrió un error al iniciar el pago con ePayco.');
+        const errorMessage = data.details 
+          ? `${data.error}: ${data.details}` 
+          : (data.error || 'Ocurrió un error al procesar el pedido.');
+        setError(errorMessage);
       }
 
     } catch (err) {
-      console.error('Error during ePayco checkout initiation:', err);
-      setError('Ocurrió un error de red al procesar el pago. Por favor, inténtalo de nuevo.');
+      console.error('Error during order submission:', err);
+      setError('Ocurrió un error de red al procesar el pedido. Por favor, inténtalo de nuevo.');
     } finally {
       setLoading(false);
     }
