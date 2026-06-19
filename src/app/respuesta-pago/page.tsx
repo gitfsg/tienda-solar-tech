@@ -10,12 +10,14 @@ interface TransactionData {
     x_transaction_state: string;
     x_ref_payco: string;
     x_id_invoice: string;
-    x_amount: string;
+    x_amount: string | number;
     x_currency_code: string;
     x_transaction_date: string;
+    x_ref_cod_transaccion?: string;
+    x_description?: string;
 }
 
-export default function EpaycoResponse() {
+function EpaycoResponseContent() {
     const searchParams = useSearchParams();
     const ref_payco = searchParams.get('ref_payco');
     const [transactionData, setTransactionData] = useState<TransactionData | null>(null);
@@ -82,7 +84,7 @@ export default function EpaycoResponse() {
               <ListGroup variant="flush" className="my-3 text-start">
                 <ListGroup.Item><strong>Referencia:</strong> {transactionData?.x_ref_cod_transaccion}</ListGroup.Item>
                 <ListGroup.Item><strong>Factura:</strong> {transactionData?.x_id_invoice}</ListGroup.Item>
-                <ListGroup.Item><strong>Valor:</strong> {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(transactionData?.x_amount)}</ListGroup.Item>
+                <ListGroup.Item><strong>Valor:</strong> {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(Number(transactionData?.x_amount || 0))}</ListGroup.Item>
                 <ListGroup.Item><strong>Descripción:</strong> {transactionData?.x_description}</ListGroup.Item>
               </ListGroup>
             </div>
@@ -93,5 +95,18 @@ export default function EpaycoResponse() {
         </Card.Body>
       </Card>
     </Container>
+  );
+}
+
+export default function EpaycoResponse() {
+  return (
+    <Suspense fallback={
+      <Container className="my-5 text-center">
+        <Spinner animation="border" role="status" className="me-2" />
+        <span>Cargando...</span>
+      </Container>
+    }>
+      <EpaycoResponseContent />
+    </Suspense>
   );
 }
